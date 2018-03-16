@@ -32,13 +32,14 @@ client.indices.create({
 
 async function insertIntoElastic() {
   const brands = await getBrands();
+  console.log(brands);
   const cars = [];
   brands.forEach(async brand => {
     var carsWithBrand = await getModels(brand);
     carsWithBrand.forEach(car => {
       cars.push(car);
     });
-  }, () => { fs.writeFileSync('cars.json', cars); });
+    fs.writeFileSync('cars.json', JSON.stringify(cars),'UTF-8'); });
 
 }
 /*
