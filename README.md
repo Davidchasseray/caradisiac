@@ -1,5 +1,22 @@
 # CARADISIAC
 
+## In order to lauch the project : 
+- Open Elasticsearch
+- Launch the api using the index located in the server repo
+```js
+cd server
+node index.js
+```
+- Launch the app lauching it in the client server
+```
+cd client
+npm start 
+```
+You can click on the results of the research.
+
+
+
+
 > Drive comfortably
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
