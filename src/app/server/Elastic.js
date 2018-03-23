@@ -18,48 +18,23 @@ client.ping({
 });
 
 
-client.indices.create({
-  index: 'cars'
-}, function (err, resp, status) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("create", resp);
-  }
-});
-
-
 
 async function insertIntoElastic() {
   const brands = await getBrands();
   console.log(brands);
   const cars = [];
-  brands.forEach(async brand => {
+  for(brand of brands){
     var carsWithBrand = await getModels(brand);
-    carsWithBrand.forEach(car => {
+    for(car of carsWithBrand) {
+      cars.push({index:{_index:"caradisiac",_type:"car",_id: car.uuid}})
       cars.push(car);
-    });
-    fs.writeFileSync('cars.json', JSON.stringify(cars),'UTF-8'); });
-
+    };
+    //fs.writeFileSync('cars.json', JSON.stringify(cars),'UTF-8'); });
+    client.bulk({"body":cars}, function (err, resp, status) {
+        console.log(resp);
+      });    
+  };
 }
-/*
-  cars.forEach(car => {
-    client.index({
-      index: 'cars',
-      id: car.uuid,
-      type: 'car',
-      body: {
-        "brand": car.brand,
-        "model": car.model,
-        "volume": car.volume,
-        "name": car.name
-      }
-    }, function (err, resp, status) {
-      console.log(resp);
-    });
-  });
-};
-*/
 
 insertIntoElastic();
 exports.insertElastic = insertIntoElastic;
