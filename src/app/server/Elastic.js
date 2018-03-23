@@ -36,5 +36,5 @@ async function insertIntoElastic() {
   };
 }
 
-insertIntoElastic();
+//insertIntoElastic();
 exports.insertElastic = insertIntoElastic;

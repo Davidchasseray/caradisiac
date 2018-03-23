@@ -1,9 +1,15 @@
-const {getModels} = require('node-car-api');
+const elasticsearch = require('elasticsearch');
+const express = require('express');
+const bodyParser = require('body-parser');
 
-async function print () {
-  const models = await getModels('PEUGEOT');
 
-  console.log(models);
-}
+const app = express();
 
-print();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use(require('./routes'));
+
+app.listen(9292, () => {
+    console.log('Listening on port 9292');
+})
